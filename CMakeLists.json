@@ -1,0 +1,286 @@
+{
+  "version": 9,
+  "configurePresets": [
+    {
+      "name": "ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "generator": "Ninja",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+
+    },
+    {
+      "name": "vcpkg",
+      "hidden": true,
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
+      "hidden": true
+    },
+    {
+      "name": "release",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" },
+      "hidden": true
+    },
+    {
+      "name": "gcc",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_CXX_FLAGS": "-Wall -Wconversion -Wextra -Wpedantic"
+      },
+      "hidden": true
+    },
+    {
+      "name": "clang",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "clang++" },
+      "hidden": true
+    },
+    {
+      "name": "gcc-debug",
+      "inherits": [ "ninja", "gcc", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "gcc-release",
+      "inherits": [ "ninja", "gcc", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc-vcpkg-debug",
+      "inherits": [ "ninja", "gcc", "vcpkg", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "gcc-vcpkg-release",
+      "inherits": [ "ninja", "gcc", "vcpkg", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "clang-debug",
+      "inherits": [ "ninja", "clang", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "clang-release",
+      "inherits": [ "ninja", "clang", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "clang-vcpkg-debug",
+      "inherits": [ "ninja", "clang", "vcpkg", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "clang-vcpkg-release",
+      "inherits": [ "ninja", "clang", "vcpkg", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "homebrew-clang",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_STDLIB_MODULES_JSON": "/opt/homebrew/opt/llvm/lib/c++/libc++.modules.json",
+        "CMAKE_OSX_SYSROOT": "macosx"
+      },
+      "hidden": true
+    },
+    {
+      "name": "homebrew-clang-debug",
+      "inherits": [ "ninja", "homebrew-clang", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "homebrew-clang-release",
+      "inherits": [ "ninja", "homebrew-clang", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "homebrew-clang-vcpkg-debug",
+      "inherits": [ "ninja", "homebrew-clang", "vcpkg", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "homebrew-clang-vcpkg-release",
+      "inherits": [ "ninja", "homebrew-clang", "vcpkg", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "msvc",
+      "cacheVariables": { "CMAKE_CXX_COMPILER": "cl.exe" },
+      "hidden": true
+    },
+    {
+      "name": "msvc-debug",
+      "inherits": [ "ninja", "msvc", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc-release",
+      "inherits": [ "ninja", "msvc", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc-vcpkg-debug",
+      "inherits": [ "ninja", "msvc", "vcpkg", "debug" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc-vcpkg-release",
+      "inherits": [ "ninja", "msvc", "vcpkg", "release" ],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug",
+      "configurePreset": "gcc-debug"
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release",
+      "configurePreset": "gcc-release"
+    },
+    {
+      "name": "gcc-vcpkg-debug",
+      "displayName": "GCC Debug (vcpkg)",
+      "configurePreset": "gcc-vcpkg-debug"
+    },
+    {
+      "name": "gcc-vcpkg-release",
+      "displayName": "GCC Release (vcpkg)",
+      "configurePreset": "gcc-vcpkg-release"
+    },
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug",
+      "configurePreset": "clang-debug"
+    },
+    {
+      "name": "clang-release",
+      "displayName": "Clang Release",
+      "configurePreset": "clang-release"
+    },
+    {
+      "name": "clang-vcpkg-debug",
+      "displayName": "Clang Debug (vcpkg)",
+      "configurePreset": "clang-vcpkg-debug"
+    },
+    {
+      "name": "clang-vcpkg-release",
+      "displayName": "Clang Release (vcpkg)",
+      "configurePreset": "clang-vcpkg-release"
+    },
+    {
+      "name": "homebrew-clang-debug",
+      "displayName": "Homebrew Clang Debug",
+      "configurePreset": "homebrew-clang-debug"
+    },
+    {
+      "name": "homebrew-clang-release",
+      "displayName": "Homebrew Clang Release",
+      "configurePreset": "homebrew-clang-release"
+    },
+    {
+      "name": "homebrew-clang-vcpkg-debug",
+      "displayName": "Homebrew Clang Debug (vcpkg)",
+      "configurePreset": "homebrew-clang-vcpkg-debug"
+    },
+    {
+      "name": "homebrew-clang-vcpkg-release",
+      "displayName": "Homebrew Clang Release (vcpkg)",
+      "configurePreset": "homebrew-clang-vcpkg-release"
+    },
+    {
+      "name": "msvc-debug",
+      "displayName": "MSVC Debug",
+      "configurePreset": "msvc-debug"
+    },
+    {
+      "name": "msvc-release",
+      "displayName": "MSVC Release",
+      "configurePreset": "msvc-release"
+    },
+    {
+      "name": "msvc-vcpkg-debug",
+      "displayName": "MSVC Debug (vcpkg)",
+      "configurePreset": "msvc-vcpkg-debug"
+    },
+    {
+      "name": "msvc-vcpkg-release",
+      "displayName": "MSVC Release (vcpkg)",
+      "configurePreset": "msvc-vcpkg-release"
+    }
+  ]
+}
