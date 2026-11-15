@@ -17,16 +17,11 @@ typedef struct {
 } WorkerArgs;
 
 void workerThreadStart(WorkerArgs * const args) {
-    // УЛУЧШЕНИЕ: Вместо блочного деления используем чередование строк.
-    // Это выравнивает нагрузку, так как дорогие строки (центр) 
-    // распределяются между всеми потоками поровну.
-    
     for (int j = args->threadId; j < args->height; j += args->numThreads) {
-        // Вызываем серийную функцию для ОДНОЙ строки
         mandelbrotSerial(
             args->x0, args->y0, args->x1, args->y1,
             args->width, args->height,
-            j, 1, // startRow = j, totalRows = 1
+            j, 1,
             args->maxIterations,
             args->output
         );
